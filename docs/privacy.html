@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy Policy — Desktop Cleaner</title>
+<link rel="icon" href="assets/icon.png">
+<style>
+  :root {
+    --bg: #0d0d10; --bg-elevated: #16161a; --border: rgba(255,255,255,0.08);
+    --text: #f2f2f4; --text-secondary: #a3a3ad; --accent: #c026d3; --accent-bright: #e879f9;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif; line-height: 1.6; }
+  a { color: var(--accent-bright); }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 0 24px; }
+  nav { position: sticky; top: 0; z-index: 10; background: rgba(13,13,16,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+  nav .wrap { max-width: 1080px; display: flex; align-items: center; justify-content: space-between; padding-top: 14px; padding-bottom: 14px; }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 15px; text-decoration: none; color: var(--text); }
+  .brand img { width: 26px; height: 26px; border-radius: 7px; display: block; }
+  nav a.back { color: var(--text-secondary); text-decoration: none; font-size: 14px; }
+  main { padding: 64px 0 100px; }
+  h1 { font-size: 36px; letter-spacing: -0.01em; margin: 0 0 6px; }
+  .updated { color: var(--text-secondary); font-size: 14px; margin: 0 0 40px; }
+  h2 { font-size: 21px; margin: 40px 0 14px; letter-spacing: -0.005em; }
+  p { color: var(--text-secondary); font-size: 16px; margin: 0 0 16px; }
+  strong { color: var(--text); }
+  ul { color: var(--text-secondary); font-size: 16px; padding-left: 22px; }
+  li { margin-bottom: 8px; }
+  footer { border-top: 1px solid var(--border); padding: 32px 0 50px; }
+  footer .wrap { max-width: 1080px; }
+  footer a { color: var(--text-secondary); text-decoration: none; font-size: 14px; }
+</style>
+</head>
+<body>
+<nav>
+  <div class="wrap">
+    <a class="brand" href="index.html"><img src="assets/icon.png" alt="">Desktop Cleaner</a>
+    <a class="back" href="index.html">← Back to site</a>
+  </div>
+</nav>
+<main>
+  <div class="wrap">
+    <h1>Privacy Policy</h1>
+    <p class="updated">Last updated: 2026-09-24</p>
+
+    <p><strong>Short version: Desktop Cleaner collects nothing beyond what a purchased license genuinely requires.</strong> It's a Mac utility that finds and removes cache files, memory pressure, large files, and leftover app data — entirely on your own Mac. Scanning and reviewing results never touches the network at all. The only things that do are three narrow, specific requests, each described in full below: checking for app updates, sending a crash report you've explicitly chosen to send, and activating or validating a paid license.</p>
+
+    <h2>Information We Collect</h2>
+    <p><strong>Nothing, automatically.</strong> Specifically, Desktop Cleaner does not collect, store, or transmit, without your explicit action:</p>
+    <ul>
+      <li>Your name, email address, or any other personal identifier</li>
+      <li>Usage analytics or behavioral data (what you clicked, which features you use, how often you open the app)</li>
+      <li>The contents of your files, or a list of what you chose to delete</li>
+      <li>Your device's advertising identifier, IP address, or location</li>
+      <li>Any information via cookies, web beacons, or similar tracking technology — the app has no web views and makes no web requests</li>
+    </ul>
+    <p>There is no sign-up, no login, and no account of any kind beyond the license key described below. Three features make network connections, and only these three: checking for app updates, opt-in crash reporting, and license activation. None of the three runs silently collecting behavioral data — you can verify this yourself with a network monitor (Little Snitch, or macOS's own Console app), which will show no activity from Desktop Cleaner outside of those cases.</p>
+    <p><strong>Crash reports are opt-in, one at a time.</strong> If Desktop Cleaner crashes, macOS itself (not Desktop Cleaner) saves a local crash log, the same way it does for every other app on your Mac. The next time you open Desktop Cleaner, it shows you that log and asks whether you'd like to send it — you can read the entire report first, and nothing is sent anywhere unless you click "Send Report." If you do, that one report (the stack trace, your macOS version, and the app's version — never your files or any personal data) is sent to Sentry, a third-party crash-reporting service. Declining, or simply not clicking "Send Report," means nothing is sent, ever, for that crash.</p>
+    <p><strong>Cleaning anything up requires a paid license; scanning and reviewing never does.</strong> Activating a license sends the key you enter, plus a label for this Mac (its computer name, e.g. "Jane's MacBook Pro" — the same name already visible to you in System Settings → General → Sharing), to LemonSqueezy, the service used to sell and validate licenses. LemonSqueezy also receives this same information once each time the app launches with a license already activated, to confirm the license is still valid. Your license key is stored in this Mac's Keychain, not in a plain-text file. No other information about your Mac or your files is included in either request.</p>
+
+    <h2>How the App Works Locally</h2>
+    <p>To do its job, Desktop Cleaner reads information that already exists on your Mac — but only to show it to you and act on your explicit choices, and only in memory while the app is running:</p>
+    <ul>
+      <li><strong>File and folder metadata</strong> (paths, sizes, modification dates) under locations like <code>~/Library/Caches</code>, <code>~/Library/Logs</code>, and your home folder, to find caches, logs, and large files worth reviewing.</li>
+      <li><strong>Installed application info</strong> (names, bundle identifiers, icons, versions) read from <code>/Applications</code>, used by the Uninstaller to find an app's related files.</li>
+      <li><strong>Running process names and memory usage</strong> (via the same mechanism Activity Monitor uses), shown in the Memory tab's "Top Processes" list.</li>
+    </ul>
+    <p>None of this is written to a log file, bundled into a report, or sent anywhere. It's read fresh each time you open a tab or trigger a scan, held in memory for as long as the app needs it, and discarded when you quit. Files you choose to delete are moved to the Trash (recoverable by you, like any other Finder deletion) or, for system-level categories that require administrator approval, removed permanently after you explicitly confirm — either way, nothing about what you deleted is recorded or reported.</p>
+
+    <h2>Permissions We Ask For</h2>
+    <p><strong>Full Disk Access</strong> (System Settings → Privacy &amp; Security). This lets scans reach folders macOS otherwise blocks apps from reading, like Photos Library or other apps' protected data, so results are more complete. It's entirely optional — the app works without it, just with narrower results — and macOS itself, not Desktop Cleaner, controls who can grant or revoke it.</p>
+    <p><strong>Administrator password prompt.</strong> Some cleanup categories (system-wide caches, rotated system logs, Time Machine local snapshots) are owned by the operating system rather than your user account, so macOS requires administrator approval to remove them. Desktop Cleaner never displays a password field, never receives what you type into that dialog, and has no way to store or transmit it even if it wanted to.</p>
+
+    <h2>Third-Party Services</h2>
+    <p>Desktop Cleaner does not integrate any third-party analytics or advertising SDKs, and does not run any crash-reporting SDK that captures data automatically in the background. Three network connections exist, all narrow and all described above:</p>
+    <ul>
+      <li><strong>Update checks</strong>, which only ever check a version number against a public release feed. They never send information about you or your Mac.</li>
+      <li><strong>Crash reports</strong>, sent to Sentry, but only for a specific crash you have reviewed and explicitly chosen to send.</li>
+      <li><strong>License activation and validation</strong>, sent to LemonSqueezy — your license key and this Mac's computer name, nothing else.</li>
+    </ul>
+    <p>No other data is shared with any third party. If a future version adds a feature that involves a new kind of network connection, this policy will be revised first, with the change clearly called out, before that version ships.</p>
+
+    <h2>Children's Privacy</h2>
+    <p>Desktop Cleaner is a general-purpose system utility, not directed at children, and isn't designed or marketed for use by them. Because the app collects no data from any user regardless of age, there is no children's personal information for us to knowingly or unknowingly gather.</p>
+
+    <h2>Changes to This Policy</h2>
+    <p>If this policy changes, the "Last updated" date at the top will change with it, and any meaningful change — particularly anything that would add data collection where none exists today — will also be called out in that app version's release notes, not just buried in this page.</p>
+
+    <h2>Contact</h2>
+    <p>Questions about this policy or how Desktop Cleaner handles (or, as described above, doesn't handle) your data can be sent to <strong>mvodounou@outlook.com</strong>.</p>
+  </div>
+</main>
+<footer>
+  <div class="wrap"><a href="index.html">← Back to Desktop Cleaner</a></div>
+</footer>
+</body>
+</html>

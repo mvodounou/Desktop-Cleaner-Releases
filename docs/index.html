@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Desktop Cleaner — a Mac cleanup tool that shows its work</title>
+<meta name="description" content="Desktop Cleaner finds cache, memory, large files, duplicates, and leftover app data on your Mac — and shows you exactly what it found before anything is touched. Notarized, no telemetry, no account.">
+<link rel="icon" href="assets/icon.png">
+<style>
+  :root {
+    --bg: #0d0d10;
+    --bg-elevated: #16161a;
+    --card: #1b1b20;
+    --border: rgba(255,255,255,0.08);
+    --text: #f2f2f4;
+    --text-secondary: #a3a3ad;
+    --text-tertiary: #6f6f78;
+    --accent: #c026d3;
+    --accent-bright: #e879f9;
+    --accent-soft: rgba(192,38,211,0.12);
+    --green: #34d399;
+    --max-width: 1080px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+  .wrap { max-width: var(--max-width); margin: 0 auto; padding: 0 24px; }
+
+  /* Nav */
+  nav {
+    position: sticky; top: 0; z-index: 10;
+    background: rgba(13,13,16,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  nav .wrap { display: flex; align-items: center; justify-content: space-between; padding-top: 14px; padding-bottom: 14px; }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 15px; text-decoration: none; }
+  .brand img { width: 26px; height: 26px; border-radius: 7px; display: block; }
+  nav .links { display: flex; gap: 28px; align-items: center; }
+  nav .links a { font-size: 14px; color: var(--text-secondary); text-decoration: none; }
+  nav .links a:hover { color: var(--text); }
+  .btn-download-small {
+    background: var(--accent);
+    color: white !important;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none !important;
+  }
+
+  /* Hero */
+  header.hero { padding: 88px 0 64px; text-align: center; position: relative; overflow: hidden; }
+  header.hero::before {
+    content: "";
+    position: absolute; top: -200px; left: 50%; transform: translateX(-50%);
+    width: 900px; height: 500px;
+    background: radial-gradient(ellipse at center, rgba(192,38,211,0.20) 0%, rgba(192,38,211,0) 70%);
+    pointer-events: none;
+  }
+  .hero-icon { width: 96px; height: 96px; border-radius: 22px; box-shadow: 0 20px 60px rgba(192,38,211,0.35); position: relative; }
+  h1.hero-title {
+    font-size: 52px; font-weight: 750; letter-spacing: -0.02em; line-height: 1.05;
+    margin: 28px 0 18px; position: relative;
+  }
+  .hero-sub {
+    font-size: 19px; color: var(--text-secondary); max-width: 620px; margin: 0 auto 34px;
+    position: relative;
+  }
+  .hero-ctas { display: flex; gap: 14px; justify-content: center; align-items: center; flex-wrap: wrap; position: relative; }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--accent-bright), var(--accent));
+    color: white; text-decoration: none;
+    padding: 15px 30px; border-radius: 12px;
+    font-size: 16px; font-weight: 650;
+    display: inline-flex; align-items: center; gap: 10px;
+    box-shadow: 0 10px 30px rgba(192,38,211,0.35);
+  }
+  .btn-secondary {
+    background: var(--bg-elevated); border: 1px solid var(--border);
+    color: var(--text); text-decoration: none;
+    padding: 15px 26px; border-radius: 12px;
+    font-size: 16px; font-weight: 600;
+  }
+  .hero-meta { margin-top: 18px; font-size: 13px; color: var(--text-tertiary); position: relative; }
+
+  /* Screenshot */
+  .screenshot-frame { padding: 0 24px; margin-top: 56px; }
+  .screenshot-frame img {
+    width: 100%; max-width: var(--max-width); display: block; margin: 0 auto;
+    border-radius: 14px; border: 1px solid var(--border);
+    box-shadow: 0 40px 100px -20px rgba(0,0,0,0.6);
+  }
+
+  section { padding: 88px 0; }
+  .eyebrow { color: var(--accent-bright); font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 10px; }
+  h2 { font-size: 34px; font-weight: 700; letter-spacing: -0.01em; margin: 0 0 14px; }
+  .section-sub { color: var(--text-secondary); font-size: 17px; max-width: 640px; margin: 0 0 48px; }
+  .center { text-align: center; }
+  .center .section-sub { margin-left: auto; margin-right: auto; }
+
+  /* Feature grid */
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .feature-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 16px;
+    padding: 26px;
+  }
+  .feature-icon {
+    width: 40px; height: 40px; border-radius: 10px;
+    background: var(--accent-soft); color: var(--accent-bright);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 19px; margin-bottom: 16px;
+  }
+  .feature-card h3 { font-size: 17px; margin: 0 0 8px; }
+  .feature-card p { font-size: 14.5px; color: var(--text-secondary); margin: 0; }
+
+  /* Showcase (screenshot + text side by side) */
+  .showcase { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+  .showcase.reverse .showcase-img { order: 2; }
+  .showcase.reverse .showcase-text { order: 1; }
+  .showcase-img img { width: 100%; border-radius: 14px; border: 1px solid var(--border); box-shadow: 0 30px 70px -20px rgba(0,0,0,0.55); display: block; }
+  .showcase-text h3 { font-size: 26px; margin: 0 0 14px; letter-spacing: -0.01em; }
+  .showcase-text p { color: var(--text-secondary); font-size: 16px; margin: 0 0 12px; }
+  .showcase-text ul { padding-left: 20px; margin: 18px 0 0; color: var(--text-secondary); font-size: 15px; }
+  .showcase-text li { margin-bottom: 8px; }
+  .showcase-text li::marker { color: var(--green); }
+
+  /* Trust / privacy */
+  .trust-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .trust-item {
+    background: var(--bg-elevated); border: 1px solid var(--border); border-radius: 14px;
+    padding: 22px 24px; display: flex; gap: 16px; align-items: flex-start;
+  }
+  .trust-check {
+    flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%;
+    background: rgba(52,211,153,0.15); color: var(--green);
+    display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700;
+    margin-top: 1px;
+  }
+  .trust-item h4 { font-size: 15.5px; margin: 0 0 5px; }
+  .trust-item p { font-size: 14px; color: var(--text-secondary); margin: 0; }
+
+  /* Final CTA */
+  .final-cta {
+    background: linear-gradient(180deg, var(--bg-elevated), var(--bg));
+    border-top: 1px solid var(--border);
+    text-align: center;
+  }
+  .final-cta h2 { margin-bottom: 12px; }
+
+  footer { border-top: 1px solid var(--border); padding: 40px 0 60px; }
+  footer .wrap { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+  footer .foot-links { display: flex; gap: 22px; flex-wrap: wrap; }
+  footer a { color: var(--text-secondary); text-decoration: none; font-size: 14px; }
+  footer a:hover { color: var(--text); }
+  footer .copyright { color: var(--text-tertiary); font-size: 13px; }
+
+  @media (max-width: 860px) {
+    .grid { grid-template-columns: 1fr 1fr; }
+    .showcase, .showcase.reverse { grid-template-columns: 1fr; gap: 28px; }
+    .showcase .showcase-img, .showcase.reverse .showcase-img { order: 1; }
+    .showcase .showcase-text, .showcase.reverse .showcase-text { order: 2; }
+    .trust-grid { grid-template-columns: 1fr; }
+    h1.hero-title { font-size: 38px; }
+    .hero-sub { font-size: 17px; }
+    nav .links a:not(.btn-download-small) { display: none; }
+  }
+  @media (max-width: 560px) {
+    .grid { grid-template-columns: 1fr; }
+    h1.hero-title { font-size: 32px; }
+    header.hero { padding: 56px 0 40px; }
+    section { padding: 56px 0; }
+    h2 { font-size: 27px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="#top">
+      <img src="assets/icon.png" alt="">
+      Desktop Cleaner
+    </a>
+    <div class="links">
+      <a href="#features">Features</a>
+      <a href="#privacy">Privacy</a>
+      <a href="https://github.com/mvodounou/Desktop-Cleaner-Releases/releases">Releases</a>
+      <a class="btn-download-small" href="https://github.com/mvodounou/Desktop-Cleaner-Releases/releases/latest/download/DesktopCleaner.dmg">Download</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <img class="hero-icon" src="assets/icon.png" alt="Desktop Cleaner icon">
+    <h1 class="hero-title">A Mac cleaner that<br>shows its work</h1>
+    <p class="hero-sub">
+      Desktop Cleaner finds the caches, large files, duplicates, and leftover app data quietly
+      filling up your Mac — and shows you exactly what it found before anything is touched.
+      Nothing is deleted without you seeing it first.
+    </p>
+    <div class="hero-ctas">
+      <a class="btn-primary" href="https://github.com/mvodounou/Desktop-Cleaner-Releases/releases/latest/download/DesktopCleaner.dmg">
+        ⌘ Download for Mac
+      </a>
+      <a class="btn-secondary" href="#features">See what it does</a>
+    </div>
+    <div class="hero-meta">Free · macOS 13 or later · Notarized by Apple · Apple Silicon &amp; Intel</div>
+  </div>
+  <div class="screenshot-frame">
+    <img src="assets/dashboard.png" alt="Desktop Cleaner's Dashboard, showing memory and storage headroom at a glance">
+  </div>
+</header>
+
+<section id="features">
+  <div class="wrap">
+    <div class="center">
+      <div class="eyebrow">What it does</div>
+      <h2>Seven tools, one Mac</h2>
+      <p class="section-sub">Each one does a specific, well-scoped job — no generic "optimize everything" button that you have to trust blindly.</p>
+    </div>
+    <div class="grid">
+      <div class="feature-card">
+        <div class="feature-icon">✨</div>
+        <h3>Smart Scan</h3>
+        <p>One scan across storage, large files, and duplicates. Safe, regenerable junk can be cleaned right here — anything else goes to its own tab for a proper look first.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">▤</div>
+        <h3>Storage</h3>
+        <p>App caches, logs, dev tool caches, old device support files, Homebrew cleanup, and more — grouped by risk, with system-level items clearly marked as needing your password.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">◫</div>
+        <h3>Memory</h3>
+        <p>Live stats straight from the kernel's own counters — the same source Activity Monitor reads — plus a one-click way to ask macOS to purge reclaimable memory.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">⛶</div>
+        <h3>Large Files</h3>
+        <p>Individual files above a size threshold, anywhere in your home folder — the exports, disk images, and downloads no cache category would ever find.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">⧉</div>
+        <h3>Duplicates</h3>
+        <p>Byte-for-byte identical files, grouped and ready to review. One copy always stays — nothing here is ever pre-selected for you.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">⌫</div>
+        <h3>Uninstaller</h3>
+        <p>Removes an app plus every leftover file it left behind in ~/Library — not just what dragging it to the Trash would take.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="showcase">
+      <div class="showcase-img">
+        <img src="assets/smartscan.png" alt="Smart Scan results showing storage found across the Mac, safe items to clean, and large files and duplicates ready to review">
+      </div>
+      <div class="showcase-text">
+        <div class="eyebrow">Smart Scan</div>
+        <h3>One button, a full picture</h3>
+        <p>Smart Scan runs Storage, Large Files, and Duplicates together and gives you one number: how much space is actually reclaimable right now.</p>
+        <ul>
+          <li>Safe, regenerable caches can be cleaned in one click, right from this screen</li>
+          <li>Large files and duplicates always go to their own tab first — neither is something any tool can safely judge as "junk" on its own</li>
+          <li>Every category explains itself: what it is, where it lives, and why it's safe</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="showcase reverse">
+      <div class="showcase-img">
+        <img src="assets/uninstaller.png" alt="The Uninstaller tab showing a list of installed apps ready to be fully removed">
+      </div>
+      <div class="showcase-text">
+        <div class="eyebrow">Uninstaller</div>
+        <h3>Actually gone, not just moved</h3>
+        <p>Dragging an app to the Trash leaves its caches, logs, preferences, and saved state behind — sometimes for years. The Uninstaller finds all of it.</p>
+        <ul>
+          <li>Matches leftover files by bundle identifier, then shows you exactly what it found before removing anything</li>
+          <li>Every app on your Mac, searchable, with real installed versions</li>
+          <li>One click removes the app and everything it left behind — reversible via Trash</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="privacy">
+  <div class="wrap">
+    <div class="center">
+      <div class="eyebrow">Privacy</div>
+      <h2>Collects nothing, by design</h2>
+      <p class="section-sub">Not "we minimize data collection" — there's no analytics SDK in this app to configure in the first place. You can verify every claim below yourself with a network monitor.</p>
+    </div>
+    <div class="trust-grid">
+      <div class="trust-item">
+        <div class="trust-check">✓</div>
+        <div>
+          <h4>No accounts, no sign-up</h4>
+          <p>Scanning and reviewing never touches the network at all — everything happens on your own Mac.</p>
+        </div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-check">✓</div>
+        <div>
+          <h4>No analytics, no telemetry</h4>
+          <p>No tracking of what you click, which features you use, or how often you open the app — ever.</p>
+        </div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-check">✓</div>
+        <div>
+          <h4>Crash reports are opt-in, every time</h4>
+          <p>You see the full report and choose to send it or not — nothing is ever sent automatically in the background.</p>
+        </div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-check">✓</div>
+        <div>
+          <h4>Notarized by Apple</h4>
+          <p>Signed with a Developer ID, notarized, and distributed directly — not sandboxed into a reduced-feature App Store edition.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="final-cta">
+  <div class="wrap center">
+    <h2>See what's actually using your Mac's space</h2>
+    <p class="section-sub" style="margin-left:auto;margin-right:auto;">Free to scan and review. macOS 13 or later, Apple Silicon and Intel.</p>
+    <div class="hero-ctas">
+      <a class="btn-primary" href="https://github.com/mvodounou/Desktop-Cleaner-Releases/releases/latest/download/DesktopCleaner.dmg">
+        ⌘ Download for Mac
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-links">
+      <a href="https://github.com/mvodounou/Desktop-Cleaner-Releases/releases">All releases</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="eula.html">License Agreement</a>
+      <a href="mailto:mvodounou@outlook.com">Contact</a>
+    </div>
+    <div class="copyright">© 2026 Luova LTD. Desktop Cleaner is not affiliated with Apple Inc.</div>
+  </div>
+</footer>
+
+</body>
+</html>
