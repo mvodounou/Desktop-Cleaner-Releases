@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Desktop Cleaner — a Mac cleanup tool that shows its work</title>
-<meta name="description" content="Desktop Cleaner finds cache, memory, large files, duplicates, and leftover app data on your Mac — and shows you exactly what it found before anything is touched. Notarized, no telemetry, no account.">
+<meta name="description" content="Desktop Cleaner finds cache, memory, large files, duplicates, and leftover app data on your Mac — and shows you exactly what it found before anything is touched. Free to scan; a license unlocks cleanup. Notarized, no telemetry, no account.">
 <link rel="icon" href="assets/icon.png">
 <style>
   :root {
@@ -133,6 +133,20 @@
   .showcase-text li { margin-bottom: 8px; }
   .showcase-text li::marker { color: var(--green); }
 
+  /* Pricing */
+  .pricing-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; max-width: 760px; margin: 0 auto; }
+  .pricing-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 16px;
+    padding: 30px 28px; text-align: left;
+  }
+  .pricing-card.featured { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent), 0 20px 50px -20px rgba(192,38,211,0.35); }
+  .pricing-card h3 { font-size: 20px; margin: 0 0 4px; }
+  .pricing-caption { font-size: 13.5px; color: var(--accent-bright); font-weight: 600; margin: 0 0 18px; }
+  .pricing-card ul { padding-left: 20px; margin: 0; color: var(--text-secondary); font-size: 14.5px; }
+  .pricing-card li { margin-bottom: 10px; }
+  .pricing-card li::marker { color: var(--green); }
+  .pricing-note { text-align: center; color: var(--text-tertiary); font-size: 13.5px; margin: 24px 0 0; }
+
   /* Trust / privacy */
   .trust-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
   .trust-item {
@@ -169,6 +183,7 @@
     .showcase .showcase-img, .showcase.reverse .showcase-img { order: 1; }
     .showcase .showcase-text, .showcase.reverse .showcase-text { order: 2; }
     .trust-grid { grid-template-columns: 1fr; }
+    .pricing-grid { grid-template-columns: 1fr; }
     h1.hero-title { font-size: 38px; }
     .hero-sub { font-size: 17px; }
     nav .links a:not(.btn-download-small) { display: none; }
@@ -192,6 +207,7 @@
     </a>
     <div class="links">
       <a href="#features">Features</a>
+      <a href="#pricing">Pricing</a>
       <a href="#privacy">Privacy</a>
       <a href="https://github.com/mvodounou/Desktop-Cleaner-Releases/releases">Releases</a>
       <a class="btn-download-small" href="https://github.com/mvodounou/Desktop-Cleaner-Releases/releases/latest/download/DesktopCleaner.dmg">Download</a>
@@ -214,7 +230,7 @@
       </a>
       <a class="btn-secondary" href="#features">See what it does</a>
     </div>
-    <div class="hero-meta">Free · macOS 13 or later · Notarized by Apple · Apple Silicon &amp; Intel</div>
+    <div class="hero-meta">Free to scan · License to clean · macOS 13 or later · Notarized by Apple · Apple Silicon &amp; Intel</div>
   </div>
   <div class="screenshot-frame">
     <img src="assets/dashboard.png" alt="Desktop Cleaner's Dashboard, showing memory and storage headroom at a glance">
@@ -303,6 +319,37 @@
   </div>
 </section>
 
+<section id="pricing">
+  <div class="wrap">
+    <div class="center">
+      <div class="eyebrow">Pricing</div>
+      <h2>Free to scan. Licensed to clean.</h2>
+      <p class="section-sub">Downloading Desktop Cleaner and running every scan costs nothing, with no time limit. A license unlocks actually acting on what it finds.</p>
+    </div>
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <h3>Free</h3>
+        <p class="pricing-caption">No license required</p>
+        <ul>
+          <li>Full results from Smart Scan, Storage, Memory, Large Files, and Duplicates</li>
+          <li>See exactly what's using space and why each item is safe (or not) to remove</li>
+          <li>Live memory stats and the one-click memory-purge tool</li>
+        </ul>
+      </div>
+      <div class="pricing-card featured">
+        <h3>Licensed</h3>
+        <p class="pricing-caption">Unlocks cleanup</p>
+        <ul>
+          <li>Move files to the Trash, clear system caches, and run the Uninstaller</li>
+          <li>One license activates on the Mac you buy it for</li>
+          <li>Purchases handled by LemonSqueezy — see the <a href="privacy.html">Privacy Policy</a> for exactly what that sends</li>
+        </ul>
+      </div>
+    </div>
+    <p class="pricing-note">Reviewing what's on your Mac is always free — you only pay when you're ready to remove something.</p>
+  </div>
+</section>
+
 <section id="privacy">
   <div class="wrap">
     <div class="center">
@@ -346,7 +393,7 @@
 <section class="final-cta">
   <div class="wrap center">
     <h2>See what's actually using your Mac's space</h2>
-    <p class="section-sub" style="margin-left:auto;margin-right:auto;">Free to scan and review. macOS 13 or later, Apple Silicon and Intel.</p>
+    <p class="section-sub" style="margin-left:auto;margin-right:auto;">Free to scan and review — a license unlocks cleanup. macOS 13 or later, Apple Silicon and Intel.</p>
     <div class="hero-ctas">
       <a class="btn-primary" href="https://github.com/mvodounou/Desktop-Cleaner-Releases/releases/latest/download/DesktopCleaner.dmg">
         ⌘ Download for Mac
