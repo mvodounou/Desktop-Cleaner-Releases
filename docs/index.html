@@ -135,6 +135,7 @@
 
   /* Pricing */
   .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 900px; margin: 0 auto; }
+  .pricing-grid-single { grid-template-columns: 1fr; max-width: 360px; }
   .pricing-card {
     background: var(--card); border: 1px solid var(--border); border-radius: 16px;
     padding: 28px 24px; text-align: left; display: flex; flex-direction: column;
@@ -330,39 +331,18 @@
   <div class="wrap">
     <div class="center">
       <div class="eyebrow">Pricing</div>
-      <h2>Free to scan. Licensed to clean.</h2>
-      <p class="section-sub">Downloading Desktop Cleaner and running every scan costs nothing, with no time limit. A license unlocks actually acting on what it finds — pick whichever way of paying for it suits you.</p>
+      <h2>Licensed to clean.</h2>
+      <p class="section-sub">Scanning and reviewing what Desktop Cleaner finds is always free, with no time limit. A subscription unlocks actually acting on it.</p>
     </div>
-    <div class="pricing-grid">
-      <div class="pricing-card">
-        <h3>Free</h3>
-        <p class="price"><span class="price-amount">$0</span> forever</p>
-        <p class="pricing-caption">No license required</p>
-        <ul>
-          <li>Full results from Smart Scan, Storage, Memory, Large Files, and Duplicates</li>
-          <li>See exactly what's using space and why each item is safe (or not) to remove</li>
-          <li>Live memory stats and the one-click memory-purge tool</li>
-        </ul>
-      </div>
-      <div class="pricing-card">
-        <span class="badge">Lowest to start</span>
-        <h3>Annual</h3>
+    <div class="pricing-grid pricing-grid-single">
+      <div class="pricing-card featured">
+        <span class="badge">Annual license</span>
+        <h3>Desktop Cleaner</h3>
         <p class="price"><span class="price-amount">$12.99</span> / year</p>
         <p class="pricing-caption">Renews yearly, cancel anytime</p>
         <ul>
           <li>Everything cleanup unlocks — Trash moves, system caches, the Uninstaller</li>
           <li>Billed once a year; cancel whenever you like, no questions asked</li>
-          <li>Handled by LemonSqueezy — see the <a href="privacy.html">Privacy Policy</a> for exactly what that sends</li>
-        </ul>
-      </div>
-      <div class="pricing-card featured">
-        <span class="badge">Best value</span>
-        <h3>One-Time</h3>
-        <p class="price"><span class="price-amount">$24.99</span> once</p>
-        <p class="pricing-caption">Not a subscription — pay once, own it</p>
-        <ul>
-          <li>Everything cleanup unlocks — Trash moves, system caches, the Uninstaller</li>
-          <li>One license activates on the Mac you buy it for, permanently</li>
           <li>Handled by LemonSqueezy — see the <a href="privacy.html">Privacy Policy</a> for exactly what that sends</li>
         </ul>
       </div>
